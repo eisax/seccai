@@ -231,3 +231,6 @@ class _$ProjectDao extends ProjectDao {
         project, OnConflictStrategy.abort);
   }
 }
+
+// ignore_for_file: unused_element
+final _dateTimeConverter = DateTimeConverter();

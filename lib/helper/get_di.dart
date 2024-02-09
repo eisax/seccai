@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:seccai/controller/auth_controller.dart';
 import 'package:seccai/controller/project_controller.dart';
+import 'package:seccai/controller/splash_controller.dart';
 import 'package:seccai/data/SeccaiDB.dart';
 import 'package:seccai/repository/auth_repo.dart';
 import 'package:seccai/repository/project_repo.dart';
@@ -28,6 +29,7 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => ThemeController(sharedPreferences: Get.find()));
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
   Get.lazyPut(() => ProjectController(projectRepo: Get.find()));
+  Get.lazyPut(() => SplashController(authRepo: Get.find()));
 
   Map<String, Map<String, String>> languages = {};
   for (LanguageModel languageModel in AppConstants.languages) {

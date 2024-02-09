@@ -325,33 +325,32 @@ class _BottomAddNewProjectState extends State<BottomAddNewProject> {
                         // );
 
                         try {
-                          ProjectModel p = ProjectModel(
+                          ProjectModel project = ProjectModel(
                               projectName: projectname.text,
                               createdAt: updateDate.toIso8601String(),
                               dueAt: dueDate?.toIso8601String());
 
-                          print(p.toJson());
-                          // projectController
-                          //     .createProjectLocal(project: ProjectModel())
-                          //     .then((res) => {
-                          //           if (res)
-                          //             {
-                          //               Get.offAllNamed(RouteHelper.dashboard),
-                          //               Toaster(
-                          //                       type: ToasterType.success,
-                          //                       message:
-                          //                           'Project Created Successfuly, finish setting up your project')
-                          //                   .show(context)
-                          //             }
-                          //           else
-                          //             {
-                          //               Toaster(
-                          //                       type: ToasterType.error,
-                          //                       message:
-                          //                           'Project creation failed')
-                          //                   .show(context)
-                          //             }
-                          //         });
+                          projectController
+                              .createProjectLocal(project: project)
+                              .then((res) => {
+                                    if (res)
+                                      {
+                                        Get.offAllNamed(RouteHelper.dashboard),
+                                        Toaster(
+                                                type: ToasterType.success,
+                                                message:
+                                                    'Project Created Successfuly, finish setting up your project')
+                                            .show(context)
+                                      }
+                                    else
+                                      {
+                                        Toaster(
+                                                type: ToasterType.error,
+                                                message:
+                                                    'Project creation failed')
+                                            .show(context)
+                                      }
+                                  });
                         } catch (e) {
                           Toaster(
                                   type: ToasterType.error,

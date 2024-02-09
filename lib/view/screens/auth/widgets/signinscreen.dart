@@ -148,7 +148,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                               Toaster(
                                                       type: ToasterType.success,
                                                       message:
-                                                          'User Registed Successfuly')
+                                                          'User Authenticated Successfuly')
                                                   .show(context)
                                             }
                                           else
