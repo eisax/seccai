@@ -41,9 +41,6 @@ Share
 Save
 
 
-
-
-
 A new Flutter project.
 
 ## Getting Started
