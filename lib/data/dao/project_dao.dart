@@ -12,4 +12,7 @@ abstract class ProjectDao {
 
   @insert
   Future<void> insertProject(ProjectModel project);
+
+  @update
+  Future<void> updateProject(ProjectModel myEntity);
 }

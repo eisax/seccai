@@ -13,6 +13,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputAction inputAction;
   final bool isPassword;
   final Function(String value)? onChanged;
+  final void Function()? leadingPressed;
   final Function? onSubmit;
   final bool isEnabled;
   final int maxLines;
@@ -24,6 +25,8 @@ class CustomTextField extends StatefulWidget {
   final Color? fillColor;
   final Color? borderColor;
   final List<TextInputFormatter>? inputFormatter;
+  final IconData? leading;
+  final Color? leadingColor;
 
   const CustomTextField({
     super.key,
@@ -36,8 +39,11 @@ class CustomTextField extends StatefulWidget {
     this.inputAction = TextInputAction.next,
     this.maxLines = 1,
     this.onSubmit,
+    this.leadingPressed,
+    this.leading,
     this.onChanged,
     this.prefixIcon,
+    this.leadingColor,
     this.capitalization = TextCapitalization.none,
     this.isPassword = false,
     this.inputDecoration,
@@ -89,9 +95,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               : null),
       decoration: widget.inputDecoration ??
           InputDecoration(
-            
             border: OutlineInputBorder(
-              
               borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
               borderSide: const BorderSide(style: BorderStyle.none, width: 0),
             ),
@@ -119,7 +123,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
                         color: Theme.of(context).hintColor.withOpacity(0.3)),
                     onPressed: _toggle,
                   )
-                : null,
+                : IconButton(
+                    icon: Icon(
+                      widget.leading as IconData?,
+                      size: Dimensions.iconZize,
+                      color: widget.leadingColor ??
+                          Theme.of(context).hintColor.withOpacity(0.3),
+                    ),
+                    onPressed: widget.leadingPressed,
+                  ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(Dimensions.radiusLarge),
               borderSide: BorderSide(
@@ -136,7 +148,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
             errorText: widget.errorText,
             errorBorder: InputBorder.none,
-           
           ),
       onSubmitted: (text) => widget.nextFocus != null
           ? FocusScope.of(context).requestFocus(widget.nextFocus)

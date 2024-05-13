@@ -1,13 +1,34 @@
 import 'package:floor/floor.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:seccai/data/model/member_model.dart';
+import 'package:seccai/data/model/project_model.dart';
+import 'package:seccai/data/model/user_model.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-@Entity(tableName: 'task')
+@Entity(
+  tableName: 'task',
+  foreignKeys: [
+    ForeignKey(
+      childColumns: ['project_id'],
+      parentColumns: ['id'],
+      entity: ProjectModel,
+    ),
+    ForeignKey(
+      childColumns: ['leader_id'],
+      parentColumns: ['id'],
+      entity: UserModel,
+    ),
+  ],
+  indices: [Index(value: ['ticket_id'], unique: true)]
+)
 class Task {
   @PrimaryKey(autoGenerate: true)
   int? id;
+  @ColumnInfo(name: 'ticket_id')
+  String? ticketId;
   String? title;
+  @ColumnInfo(name: 'project_id')
+  int projectId;
   String? description;
   @ColumnInfo(name: 'leader_id')
   int? leaderId;
@@ -15,17 +36,20 @@ class Task {
   String? createdAt;
   @ColumnInfo(name: 'due_at')
   String? dueAt;
-  @ColumnInfo(name: 'team_members')
-  List<Member>? teammembers;
+  @ColumnInfo(name: 'collaborator')
+  @ignore
+  List<Member>? collaborator;
 
   Task(
       {this.id,
       this.title,
       this.description,
       this.leaderId,
+      this.ticketId,
       this.createdAt,
       this.dueAt,
-      this.teammembers});
+     required this.projectId,
+      this.collaborator});
 
   factory Task.fromJson(Map<String, dynamic> json) {
     return Task(
@@ -35,7 +59,9 @@ class Task {
         dueAt: json['due_at'],
         description: json['description'],
         leaderId: json['leaderId'],
-        teammembers: json['team_members']);
+        ticketId: json['ticket_id'],
+        projectId: json['project_id'],
+        collaborator: json['collaborator']);
   }
 
   Map<String, dynamic> toJson() {
@@ -43,10 +69,12 @@ class Task {
       'id': id,
       'title': title,
       'description': description,
-      'leaderId': leaderId,
+      'leader_id': leaderId,
       'created_at': createdAt,
       'due_at': dueAt,
-      'team_members': teammembers
+      'collaborator': collaborator,
+      'ticket_id': ticketId,
+      'project_id':projectId
     };
   }
 }
